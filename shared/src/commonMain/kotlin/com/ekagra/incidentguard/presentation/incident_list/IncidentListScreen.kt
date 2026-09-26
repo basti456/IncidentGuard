@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.ekagra.incidentguard.domain.model.Incident
 import com.ekagra.incidentguard.domain.model.Severity
 import com.ekagra.incidentguard.presentation.components.IncidentMapView
+import com.ekagra.incidentguard.presentation.components.RequestLocationPermissionEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +48,9 @@ fun IncidentListScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
+    RequestLocationPermissionEffect {
+        viewModel.detectUserLocation()
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -81,6 +84,7 @@ fun IncidentListScreen(
                 is IncidentListUiState.Loading -> {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
+
                 is IncidentListUiState.Error -> {
                     Text(
                         text = state.message,
@@ -88,11 +92,11 @@ fun IncidentListScreen(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
+
                 is IncidentListUiState.Success -> {
                     val incidents = state.incidents
-                    val defaultLat = incidents.firstOrNull()?.latitude ?: 37.7749
-                    val defaultLon = incidents.firstOrNull()?.longitude ?: -122.4194
-
+                    val centerLat = state.userLatitude ?: incidents.firstOrNull()?.latitude ?: 37.7749
+                    val centerLon = state.userLongitude ?: incidents.firstOrNull()?.longitude ?: -122.4194
                     Column(modifier = Modifier.fillMaxSize()) {
                         // 1. Top Section: Interactive Map View
                         Box(
@@ -101,21 +105,51 @@ fun IncidentListScreen(
                                 .height(260.dp)
                         ) {
                             IncidentMapView(
-                                latitude = defaultLat,
-                                longitude = defaultLon,
+                                latitude = centerLat,
+                                longitude = centerLon,
                                 incidents = incidents
                             )
                         }
 
-                        // 2. Bottom Section: Scrollable Incident Cards
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            items(incidents, key = { it.id }) { incident ->
-                                IncidentItemCard(incident = incident)
+                        if (incidents.isEmpty()) {
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                                )
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(24.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = "📍 No Field Incidents Reported Yet",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Text(
+                                        text = "Tap the + button below to drop a pin and file your first inspection report.",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                        } else {
+                            // 2. Bottom Section: Scrollable Incident Cards
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                items(incidents, key = { it.id }) { incident ->
+                                    IncidentItemCard(incident = incident)
+                                }
                             }
                         }
                     }

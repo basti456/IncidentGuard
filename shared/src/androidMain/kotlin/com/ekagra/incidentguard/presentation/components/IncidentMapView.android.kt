@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.ekagra.incidentguard.domain.model.Incident
+import com.ekagra.incidentguard.domain.model.Severity
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -38,27 +40,34 @@ actual fun IncidentMapView(
             onMapClick?.invoke(latLng.latitude, latLng.longitude)
         }
     ) {
-        if (incidents.isEmpty()) {
+        // 1. Draw "Your Current / Selected Location" Marker (Azure Blue)
+        Marker(
+            state = rememberUpdatedMarkerState(position = LatLng(latitude, longitude)),
+            title = if (incidents.isEmpty()) "Selected Location" else "Your Current Location",
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+        )
+
+        // 2. Draw Reported Incidents Markers (Color-Coded by Severity)
+        incidents.forEach { incident ->
+            val hue = when (incident.severity) {
+                Severity.CRITICAL -> BitmapDescriptorFactory.HUE_RED
+                Severity.HIGH -> BitmapDescriptorFactory.HUE_ORANGE
+                Severity.MEDIUM -> BitmapDescriptorFactory.HUE_YELLOW
+                Severity.LOW -> BitmapDescriptorFactory.HUE_GREEN
+            }
+
             Marker(
                 state = rememberUpdatedMarkerState(
-                    position = LatLng(latitude, longitude)
+                    position = LatLng(incident.latitude, incident.longitude)
                 ),
-                title = "Selected Location"
+                title = "🚨 ${incident.title}",
+                snippet = "Severity: ${incident.severity.name} | Status: ${incident.status.name}",
+                icon = BitmapDescriptorFactory.defaultMarker(hue),
+                onClick = {
+                    onPinClick?.invoke(incident.id)
+                    true
+                }
             )
-        } else {
-            incidents.forEach { incident ->
-                Marker(
-                    state = rememberUpdatedMarkerState(
-                        position = LatLng(incident.latitude, incident.longitude)
-                    ),
-                    title = incident.title,
-                    snippet = "Severity: ${incident.severity.name} | Status: ${incident.status.name}",
-                    onClick = {
-                        onPinClick?.invoke(incident.id)
-                        true
-                    }
-                )
-            }
         }
     }
 }

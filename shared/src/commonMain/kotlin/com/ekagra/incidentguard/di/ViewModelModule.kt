@@ -6,6 +6,6 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { IncidentListViewModel(get(), get()) }
-    viewModel { CreateIncidentViewModel(get()) }
+    viewModel { IncidentListViewModel(get(), get(), get(), get()) }
+    viewModel { CreateIncidentViewModel(get(), get()) }
 }

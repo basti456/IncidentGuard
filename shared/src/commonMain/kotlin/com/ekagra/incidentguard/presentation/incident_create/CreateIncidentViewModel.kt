@@ -2,6 +2,7 @@ package com.ekagra.incidentguard.presentation.incident_create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ekagra.incidentguard.data.location.GpsLocationProvider
 import com.ekagra.incidentguard.domain.model.Severity
 import com.ekagra.incidentguard.domain.usecase.CreateIncidentUseCase
 import com.ekagra.incidentguard.domain.util.Resource
@@ -11,7 +12,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CreateIncidentViewModel(private val createIncidentUseCase: CreateIncidentUseCase) :
+class CreateIncidentViewModel(
+    private val createIncidentUseCase: CreateIncidentUseCase,
+    private val gpsLocationProvider: GpsLocationProvider
+) :
     ViewModel() {
     private val _uiState = MutableStateFlow(CreateIncidentUiState())
     val uiState: StateFlow<CreateIncidentUiState> = _uiState.asStateFlow()
@@ -34,6 +38,19 @@ class CreateIncidentViewModel(private val createIncidentUseCase: CreateIncidentU
 
     fun onImageSelected(localImagePath: String) {
         _uiState.update { it.copy(localImagePath = localImagePath, errorMessage = null) }
+    }
+
+    init {
+        detectCurrentLocation()
+    }
+
+    fun detectCurrentLocation() {
+        viewModelScope.launch {
+            val location = gpsLocationProvider.getCurrentLocation()
+            if (location != null) {
+                onLocationSelected(location.latitude, location.longitude)
+            }
+        }
     }
 
     fun submitIncident() {

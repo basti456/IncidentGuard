@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ekagra.incidentguard.domain.model.Severity
 import com.ekagra.incidentguard.presentation.components.IncidentMapView
+import com.ekagra.incidentguard.presentation.components.RequestLocationPermissionEffect
 import com.ekagra.incidentguard.presentation.components.rememberPhotoPickerLauncher
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,13 +54,14 @@ fun CreateIncidentScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
-
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
             onIncidentCreated()
         }
     }
-
+    RequestLocationPermissionEffect {
+        viewModel.detectCurrentLocation()
+    }
     LaunchedEffect(uiState.errorMessage) {
         uiState.errorMessage?.let { msg ->
             snackbarHostState.showSnackbar(msg)
