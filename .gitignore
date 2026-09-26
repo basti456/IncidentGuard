@@ -1,0 +1,50 @@
+# Built application files & Gradle
+*.apk
+*.aar
+*.aab
+*.nar
+*.klib
+
+# Gradle files
+.gradle/
+**/build/
+!src/**/build/
+gradle-app.setting
+
+# Local configuration & Secrets (API Keys & Credentials)
+local.properties
+*.keystore
+*.jks
+*.p12
+*.key
+google-services.json
+GoogleService-Info.plist
+
+# IDE & OS files
+.idea/
+.kotlin/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+.DS_Store
+Thumbs.db
+captures
+.externalNativeBuild
+.cxx
+
+# Xcode & iOS
+iosApp/DerivedData/
+iosApp/Pods/
+iosApp/*.xcodeproj/xcuserdata/
+iosApp/*.xcworkspace/xcuserdata/
+xcuserdata/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# Log files
+*.log
