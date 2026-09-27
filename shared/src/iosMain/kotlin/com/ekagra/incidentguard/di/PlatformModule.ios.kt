@@ -1,9 +1,13 @@
 package com.ekagra.incidentguard.di
 
 import com.ekagra.incidentguard.data.local.DatabaseDriverFactory
+import com.ekagra.incidentguard.data.location.GpsLocationProvider
+import com.ekagra.incidentguard.data.remote.NetworkObserver
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual val platformModule: Module = module {
     single { DatabaseDriverFactory() }
+    single { NetworkObserver() }
+    single { GpsLocationProvider() }
 }

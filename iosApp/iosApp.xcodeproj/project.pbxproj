@@ -6,6 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9EE8CA1F3067BAA9001FE121 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9EE8CA1E3067BAA9001FE121 /* FirebaseAnalytics */; };
+		9EE8CA213067BAA9001FE121 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9EE8CA203067BAA9001FE121 /* FirebaseAuth */; };
+		9EE8CA233067BAA9001FE121 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9EE8CA223067BAA9001FE121 /* FirebaseFirestore */; };
+		9EE8CA253067BAA9001FE121 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 9EE8CA243067BAA9001FE121 /* FirebaseMessaging */; };
+		9EE8CA273067BAA9001FE121 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 9EE8CA263067BAA9001FE121 /* FirebaseRemoteConfig */; };
+		9EE8CA293067BAA9001FE121 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9EE8CA283067BAA9001FE121 /* FirebaseStorage */; };
+		9EE8CA2C3067BB1C001FE121 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 9EE8CA2B3067BB1C001FE121 /* GoogleMaps */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		6D4D25CF65CA38CE4FD8B065 /* IncidentGuard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IncidentGuard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -41,6 +51,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EE8CA253067BAA9001FE121 /* FirebaseMessaging in Frameworks */,
+				9EE8CA1F3067BAA9001FE121 /* FirebaseAnalytics in Frameworks */,
+				9EE8CA213067BAA9001FE121 /* FirebaseAuth in Frameworks */,
+				9EE8CA233067BAA9001FE121 /* FirebaseFirestore in Frameworks */,
+				9EE8CA273067BAA9001FE121 /* FirebaseRemoteConfig in Frameworks */,
+				9EE8CA2C3067BB1C001FE121 /* GoogleMaps in Frameworks */,
+				9EE8CA293067BAA9001FE121 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +102,13 @@
 			);
 			name = iosApp;
 			packageProductDependencies = (
+				9EE8CA1E3067BAA9001FE121 /* FirebaseAnalytics */,
+				9EE8CA203067BAA9001FE121 /* FirebaseAuth */,
+				9EE8CA223067BAA9001FE121 /* FirebaseFirestore */,
+				9EE8CA243067BAA9001FE121 /* FirebaseMessaging */,
+				9EE8CA263067BAA9001FE121 /* FirebaseRemoteConfig */,
+				9EE8CA283067BAA9001FE121 /* FirebaseStorage */,
+				9EE8CA2B3067BB1C001FE121 /* GoogleMaps */,
 			);
 			productName = iosApp;
 			productReference = 6D4D25CF65CA38CE4FD8B065 /* IncidentGuard.app */;
@@ -114,6 +138,10 @@
 			);
 			mainGroup = DF4C115D4693CF56BD5FA2BD;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9EE8CA1D3067BAA9001FE121 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				9EE8CA2A3067BB1C001FE121 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F3EE983AB1B50CD8F1A53BBE /* Products */;
 			projectDirPath = "";
@@ -232,6 +260,34 @@
 			};
 			name = Debug;
 		};
+		A2D4F7F72ABF8072A4925D4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iosApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		A7ABECCB3E4624E04627D4A2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 5216F618F3FE5BED3DE0000B /* Configuration */;
@@ -290,34 +346,6 @@
 			};
 			name = Release;
 		};
-		A2D4F7F72ABF8072A4925D4C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = arm64;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iosApp/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		A9AFC5A20114BF2B48A0E124 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -349,15 +377,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D95D432A0B664E32C55D16BF /* Build configuration list for PBXProject "iosApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				027EBF012E1ADE41F6B4915D /* Debug */,
-				A7ABECCB3E4624E04627D4A2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4934F509419C77E2D111B623 /* Build configuration list for PBXNativeTarget "iosApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -367,7 +386,73 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D95D432A0B664E32C55D16BF /* Build configuration list for PBXProject "iosApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				027EBF012E1ADE41F6B4915D /* Debug */,
+				A7ABECCB3E4624E04627D4A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9EE8CA1D3067BAA9001FE121 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.19.2;
+			};
+		};
+		9EE8CA2A3067BB1C001FE121 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9EE8CA1E3067BAA9001FE121 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EE8CA1D3067BAA9001FE121 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		9EE8CA203067BAA9001FE121 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EE8CA1D3067BAA9001FE121 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		9EE8CA223067BAA9001FE121 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EE8CA1D3067BAA9001FE121 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		9EE8CA243067BAA9001FE121 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EE8CA1D3067BAA9001FE121 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		9EE8CA263067BAA9001FE121 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EE8CA1D3067BAA9001FE121 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		9EE8CA283067BAA9001FE121 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EE8CA1D3067BAA9001FE121 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		9EE8CA2B3067BB1C001FE121 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EE8CA2A3067BB1C001FE121 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CCF6DDD2FF8B37E87A4B6484 /* Project object */;
 }
