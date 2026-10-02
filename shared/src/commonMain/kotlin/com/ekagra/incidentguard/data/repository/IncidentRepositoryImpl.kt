@@ -77,15 +77,11 @@ class IncidentRepositoryImpl(
     }
 
     override suspend fun syncPendingIncidents(): Resource<Unit> {
+        // Step 1: PUSH local unsynced records -> Cloud Firestore
         val unsyncedIncidents = localDataSource.getUnsyncedIncidents()
-        if (unsyncedIncidents.isEmpty()) {
-            return Resource.Success(Unit)
-        }
-
         for (incident in unsyncedIncidents) {
             var remoteImageUrl = incident.remoteImageUrl
 
-            // 1. Upload photo to Firebase Storage if present
             if (incident.localImagePath != null && remoteImageUrl == null) {
                 when (val photoResult = syncEngine.uploadPhotoToStorage(incident.localImagePath, "${incident.id}.jpg")) {
                     is Resource.Success -> {
@@ -95,11 +91,9 @@ class IncidentRepositoryImpl(
                 }
             }
 
-            // 2. Upload document payload to Cloud Firestore
             val updatedIncident = incident.copy(remoteImageUrl = remoteImageUrl)
-            when (val syncResult = syncEngine.syncIncidentToFirestore(updatedIncident)) {
+            when (syncEngine.syncIncidentToFirestore(updatedIncident)) {
                 is Resource.Success -> {
-                    // 3. Mark as synced in local SQLDelight DB!
                     localDataSource.updateSyncStatus(
                         id = incident.id,
                         isSynced = true,
@@ -109,6 +103,17 @@ class IncidentRepositoryImpl(
                 }
                 else -> {}
             }
+        }
+
+        // Step 2: PULL remote Firestore documents -> Local SQLDelight DB
+        when (val remoteResult = syncEngine.fetchRemoteIncidents()) {
+            is Resource.Success -> {
+                val remoteIncidents = remoteResult.data ?: emptyList()
+                for (remoteIncident in remoteIncidents) {
+                    localDataSource.insertIncident(remoteIncident.copy(isSynced = true))
+                }
+            }
+            else -> {}
         }
 
         return Resource.Success(Unit)

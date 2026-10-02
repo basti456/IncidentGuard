@@ -51,4 +51,8 @@ actual class NativeSyncEngine {
         // Photos remain stored locally on device storage.
         return Resource.Success(localImagePath)
     }
+
+    actual suspend fun fetchRemoteIncidents(): Resource<List<Incident>> {
+        TODO("Not yet implemented")
+    }
 }

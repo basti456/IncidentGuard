@@ -2,25 +2,15 @@ package com.ekagra.incidentguard.data.remote
 
 import com.ekagra.incidentguard.domain.model.Incident
 import com.ekagra.incidentguard.domain.util.Resource
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
-
-object NativeSyncConfig {
-    var syncHandler: ((incident: Incident, completion: (Boolean, String?) -> Unit) -> Unit)? = null
-}
 
 actual class NativeSyncEngine {
     actual suspend fun syncIncidentToFirestore(incident: Incident): Resource<Unit> {
-        val handler = NativeSyncConfig.syncHandler ?: return Resource.Success(Unit)
-
-        return suspendCancellableCoroutine { continuation ->
-            handler(incident) { success, errorMessage ->
-                if (success) {
-                    continuation.resume(Resource.Success(Unit))
-                } else {
-                    continuation.resume(Resource.Error(errorMessage ?: "Firestore sync failed on iOS"))
-                }
-            }
+        val provider = NativeSyncRegistry.provider ?: return Resource.Success(Unit)
+        return try {
+            val success = provider.syncIncidentToFirestore(incident)
+            if (success) Resource.Success(Unit) else Resource.Error("Sync failed on iOS")
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Firestore sync failed on iOS")
         }
     }
 
@@ -29,5 +19,15 @@ actual class NativeSyncEngine {
         remoteFileName: String
     ): Resource<String> {
         return Resource.Success(localImagePath)
+    }
+
+    actual suspend fun fetchRemoteIncidents(): Resource<List<Incident>> {
+        val provider = NativeSyncRegistry.provider ?: return Resource.Success(emptyList())
+        return try {
+            val incidents = provider.fetchRemoteIncidents()
+            Resource.Success(incidents)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Failed to fetch remote incidents on iOS")
+        }
     }
 }

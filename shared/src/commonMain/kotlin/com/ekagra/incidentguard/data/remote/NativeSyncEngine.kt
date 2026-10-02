@@ -10,4 +10,6 @@ expect class NativeSyncEngine() {
         localImagePath: String,
         remoteFileName: String
     ): Resource<String>
+
+    suspend fun fetchRemoteIncidents(): Resource<List<Incident>>
 }
