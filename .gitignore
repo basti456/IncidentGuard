@@ -19,6 +19,7 @@ local.properties
 *.key
 google-services.json
 GoogleService-Info.plist
+Info.plist
 
 # IDE & OS files
 .idea/
